@@ -129,17 +129,16 @@ function addEmployee() {
         else if (input.choices === "None") {
             createEmployee();
         }
+        else () => {
+            console.log("error");
+        }
     })
 };
-
 function createEmployee() {
-    inquirer.prompt()
-    .then((employee) => writeToFile('team.html', generate));
-}
+    fs.writeFileSync(outputPath, render(employees), "utf-8");
+};
 
-function writeToFile(outputPath, employee) {
-    return fs.writeFileSync(outputPath, render(employee));
-}
+
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
