@@ -9,11 +9,39 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-
 const employees = [];
+addEmployee();
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
+function addEmployee() {
+    inquirer.prompt(
+        [
+            {
+                type: "list",
+                name: "type",
+                choices: ["Engineer", "Intern", "Manager", "None at the moment"],
+                message: "Choose what style of employee you would like to add to your list. If none, choose 'none at the moment' option.",
+            }
+        ]
+    ).then(input => {
+        if (input.type === "Engineer") {
+            addEngineer();
+        }
+        else if (input.type === "Intern") {
+            addIntern();
+        }
+        else if (input.type === "Manager") {
+            addManager();
+        }
+        else if (input.type === "None") {
+            createEmployee();
+        }
+        else () => {
+            console.log("error");
+        }
+    })
+};
 function addIntern() {
     inquirer.prompt(
         [
@@ -107,33 +135,6 @@ function addEngineer() {
     )
 }
 
-function addEmployee() {
-    inquirer.prompt(
-        [
-            {
-                type: "list",
-                name: "type",
-                choices: ["Engineer", "Intern", "Manager", "None at the moment"],
-                message: "Choose what style of employee you would like to add to your list. If none, choose 'none at the moment' option.",
-            }
-    ]).then(input => {
-        if (input.choices === "Engineer") {
-            addEngineer();
-        }
-        else if (input.choices === "Intern") {
-            addIntern();
-        }
-        else if (input.choices === "Manager") {
-            addManager();
-        }
-        else if (input.choices === "None") {
-            createEmployee();
-        }
-        else () => {
-            console.log("error");
-        }
-    })
-};
 function createEmployee() {
     fs.writeFileSync(outputPath, render(employees), "utf-8");
 };
